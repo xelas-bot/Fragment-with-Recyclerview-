@@ -9,15 +9,25 @@ public class Contact {
     private String name;
     private String phn;
     private int photo;
+    private String endTime;
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
     public Contact() {
 
     }
 
-    public Contact(String name, String phn, int photo) {
+    public Contact(String name, String phn, int photo, String endTime) {
         this.name = name;
         this.phn = phn;
         this.photo = photo;
+        this.endTime = endTime;
     }
 
     public String getName() {

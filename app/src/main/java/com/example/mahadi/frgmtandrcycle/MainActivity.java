@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TableLayout;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -24,23 +26,23 @@ public class MainActivity extends AppCompatActivity {
 
         viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
 
-   //     Add Fragment
-        viewPageAdapter.AddFrmt(new Frmt_call(),"");
-        viewPageAdapter.AddFrmt(new FrmtContact(),"");
-        viewPageAdapter.AddFrmt(new Frmt_fav(),"");
-        viewPageAdapter.AddFrmt(new Frmt_call(), "");
-        viewPageAdapter.AddFrmt(new FrmtContact(), "");
-        viewPageAdapter.AddFrmt(new Frmt_fav(), "");
+        //     Add Fragment
+        viewPageAdapter.AddFrmt(new Frmt_call("Fri"), "Friday");
+        viewPageAdapter.AddFrmt(new FrmtContact(), "Saturday");
+
+        viewPageAdapter.AddFrmt(new Frmt_fav(), "Sunday");
+        viewPageAdapter.AddFrmt(new Frmt_call("Mon"), "Monday");
+        viewPageAdapter.AddFrmt(new Frmt_call("Tues"), "Tuesday");
+        viewPageAdapter.AddFrmt(new Frmt_call("Wed"), "Wednesday");
+        viewPageAdapter.AddFrmt(new Frmt_call("Thur"), "Thursday");
+
 
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_call_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_group_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_favorite_black_24dp);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_call_black_24dp);
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_group_black_24dp);
-        tabLayout.getTabAt(5).setIcon(R.drawable.ic_favorite_black_24dp);
+        //tabLayout.getTabAt(0).setIcon(R.drawable.ic_call_black_24dp);
+        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_group_black_24dp);
+        //tabLayout.getTabAt(2).setIcon(R.drawable.ic_favorite_black_24dp);
 
         //Remove ActionBar Shadow
 

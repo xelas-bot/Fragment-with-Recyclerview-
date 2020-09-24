@@ -38,6 +38,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         holder.name.setText(contactList.get(position).getName());
         holder.phone_num.setText(contactList.get(position).getPhn());
         holder.imageView.setImageResource(contactList.get(position).getPhoto());
+        holder.endTime.setText(contactList.get(position).getEndTime());
     }
 
     @Override
@@ -49,6 +50,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
         TextView name;
         TextView phone_num;
+        TextView endTime;
         ImageView imageView;
 
 
@@ -57,6 +59,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
             name = (TextView) itemView.findViewById(R.id.name_contact);
             phone_num = (TextView) itemView.findViewById(R.id.ph_number);
+            endTime = (TextView) itemView.findViewById(R.id.endTime);
             imageView = (ImageView) itemView.findViewById(R.id.img);
         }
     }
