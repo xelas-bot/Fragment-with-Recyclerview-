@@ -5,9 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TableLayout;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
         viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
 
         //     Add Fragment
-        viewPageAdapter.AddFrmt(new Frmt_call("Fri"), "Friday");
-        viewPageAdapter.AddFrmt(new FrmtContact(), "Saturday");
+        viewPageAdapter.AddFrmt(new ScrollableThree("Fri"), "Friday");
+        viewPageAdapter.AddFrmt(new Scrollable(), "Saturday");
 
-        viewPageAdapter.AddFrmt(new Frmt_fav(), "Sunday");
-        viewPageAdapter.AddFrmt(new Frmt_call("Mon"), "Monday");
-        viewPageAdapter.AddFrmt(new Frmt_call("Tues"), "Tuesday");
-        viewPageAdapter.AddFrmt(new Frmt_call("Wed"), "Wednesday");
-        viewPageAdapter.AddFrmt(new Frmt_call("Thur"), "Thursday");
+        viewPageAdapter.AddFrmt(new ScrollableTwo(), "Sunday");
+        viewPageAdapter.AddFrmt(new ScrollableThree("Mon"), "Monday");
+        viewPageAdapter.AddFrmt(new ScrollableThree("Tues"), "Tuesday");
+        viewPageAdapter.AddFrmt(new ScrollableThree("Wed"), "Wednesday");
+        viewPageAdapter.AddFrmt(new ScrollableThree("Thur"), "Thursday");
 
 
         viewPager.setAdapter(viewPageAdapter);

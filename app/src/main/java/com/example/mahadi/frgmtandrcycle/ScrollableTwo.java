@@ -22,31 +22,29 @@ import java.util.TimeZone;
  * Created by Mahadi on 3/7/2018.
  */
 
-public class Frmt_call extends Fragment {
+public class ScrollableTwo extends Fragment {
     View v;
     RecyclerView recyclerView;
-    List<Contact> listCont;
+    List<Card> listCont;
     Schedule schedule;
-    String day;
 
-    public Frmt_call(String day) {
-        this.day = day;
+    public ScrollableTwo() {
+
     }
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.call_frmt,container,false);
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.contact_recycleView);
+        v = inflater.inflate(R.layout.fav_frmt, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.fav_recycleView);
         RecycleViewAdapter viewAdapter = new RecycleViewAdapter(getContext(), listCont);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(viewAdapter);
         return v;
-
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,13 +86,14 @@ public class Frmt_call extends Fragment {
             //convert seconds to milliseconds
             Date date = new Date(unix_seconds*1000L);
             // format of the date
-            SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-            jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+            SimpleDateFormat jdf = new SimpleDateFormat("HH:mm:ss");
+            jdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
             String java_date = sdf.format(date);
             int duration = (int)(endTime - time)/60;
+            String timing = jdf.format(date);
 
-            if (java_date.contains(day)){
-                listCont.add(new Contact(((String) tempMap.get("name")), (String) tempMap.get("description"), R.drawable.ic_launcher_background, "Duration: "+ duration + " minutes on "+ java_date));
+            if (java_date.contains("Sun")){
+                listCont.add(new Card(((String) tempMap.get("name")), (String) tempMap.get("description"), R.drawable.ic_launcher_background, "Duration: "+ duration + " minutes at "+ timing));
             }
 
 
@@ -105,8 +104,10 @@ public class Frmt_call extends Fragment {
         }
 
 
-        listCont.add(new Contact("Mahadi Hasan", "01717677540", R.drawable.ic_launcher_background,"sdfs"));
-
+        //listCont.add(new Contact("Mahadi Hasan", "01717677540", R.drawable.ic_launcher_background,"sdfs"));
 
     }
+
+
 }
+

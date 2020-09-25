@@ -4,7 +4,7 @@ package com.example.mahadi.frgmtandrcycle;
  * Created by Mahadi on 3/11/2018.
  */
 
-public class Contact {
+public class Card {
 
     private String name;
     private String phn;
@@ -19,11 +19,11 @@ public class Contact {
         this.endTime = endTime;
     }
 
-    public Contact() {
+    public Card() {
 
     }
 
-    public Contact(String name, String phn, int photo, String endTime) {
+    public Card(String name, String phn, int photo, String endTime) {
         this.name = name;
         this.phn = phn;
         this.photo = photo;

@@ -9,8 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,14 +27,14 @@ import java.util.TimeZone;
  * Created by Mahadi on 3/7/2018.
  */
 
-public class FrmtContact extends Fragment {
+public class Scrollable extends Fragment {
 
     View v;
     RecyclerView recyclerView;
-    List<Contact> listCont;
+    List<Card> listCont;
     Schedule schedule;
 
-    public FrmtContact() {
+    public Scrollable() {
 
     }
 
@@ -48,6 +53,7 @@ public class FrmtContact extends Fragment {
      @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
          String json = null;
+         String theJson = null;
          try {
              InputStream is = getContext().getAssets().open("data.json");
              int size = is.available();
@@ -55,7 +61,53 @@ public class FrmtContact extends Fragment {
              is.read(buffer);
              is.close();
              json = new String(buffer, "UTF-8");
-             schedule = new Schedule(json);
+
+
+             URL url;
+             StringBuffer response = new StringBuffer();
+             try {
+                 url = new URL("https://api.hackillinois.org/event/");
+             } catch (MalformedURLException e) {
+                 throw new IllegalArgumentException("invalid url");
+             }
+
+             HttpURLConnection conn = null;
+             try {
+                 conn = (HttpURLConnection) url.openConnection();
+                 conn.setDoOutput(false);
+                 conn.setDoInput(true);
+                 conn.setUseCaches(false);
+                 conn.setRequestMethod("GET");
+                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+
+                 // handle the response
+                 int status = conn.getResponseCode();
+                 if (status != 200) {
+                     throw new IOException("Post failed with error code " + status);
+                 } else {
+                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                     String inputLine;
+                     while ((inputLine = in.readLine()) != null) {
+                         response.append(inputLine);
+                     }
+                     in.close();
+                 }
+             } catch (Exception e) {
+                 e.printStackTrace();
+             } finally {
+                 if (conn != null) {
+                     conn.disconnect();
+                 }
+
+                 //Here is your json in string format
+                 String responseJSON = response.toString();
+                 theJson = responseJSON;
+                 schedule = new Schedule(json);
+             }
+
+
+
+
          } catch (IOException ex) {
              ex.printStackTrace();
          }
@@ -85,13 +137,14 @@ public class FrmtContact extends Fragment {
              //convert seconds to milliseconds
              Date date = new Date(unix_seconds*1000L);
              // format of the date
-             SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-             jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+             SimpleDateFormat jdf = new SimpleDateFormat("HH:mm:ss");
+             jdf.setTimeZone(TimeZone.getTimeZone("GMT-5"));
              String java_date = sdf.format(date);
              int duration = (int)(endTime - time)/60;
+             String timing = jdf.format(date);
 
              if (java_date.contains("Sat")){
-                 listCont.add(new Contact(((String) tempMap.get("name")), (String) tempMap.get("description"), R.drawable.ic_launcher_background, "Duration: "+ duration + " minutes on "+ java_date));
+                 listCont.add(new Card(((String) tempMap.get("name")), (String) tempMap.get("description"), R.drawable.ic_launcher_background, "Duration: "+ duration + " minutes at "+ timing));
              }
 
 
@@ -102,7 +155,7 @@ public class FrmtContact extends Fragment {
          }
 
 
-         listCont.add(new Contact("Mahadi Hasan", "01717677540", R.drawable.ic_launcher_background,"sdfs"));
+         //listCont.add(new Contact("Mahadi Hasan", "01717677540", R.drawable.ic_launcher_background,"sdfs"));
 
 
     }
